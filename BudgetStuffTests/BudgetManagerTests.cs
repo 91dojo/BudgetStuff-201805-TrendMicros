@@ -56,13 +56,8 @@ namespace BudgetStuffTests
         }
 
         [TestMethod]
-        public void OnedayHasBudget()
+        public void one_effective_day_period_inside_one_budget()
         {
-            // arrange
-            var startdate = new DateTime(2017, 03, 01);
-            var enddate = new DateTime(2017, 03, 01);
-
-            // mock
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
@@ -71,7 +66,7 @@ namespace BudgetStuffTests
                 }
             });
 
-            AmountShouldBe(startdate, enddate, 100);
+            AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 03, 01), 100);
         }
 
         [TestMethod]
