@@ -18,7 +18,7 @@ namespace BudgetStuffTests
             var period = new Period(startDate, endDate);
 
             var budgets = _repo.GetBudgets();
-            var budgetMap = budgets.ToDictionary(x => x.FirstDay, x => x);
+            return budgets.Sum(b => EffectiveAmount(b, period));
             decimal totalAmount = 0;
             foreach (var budget in budgets)
             {
@@ -27,18 +27,9 @@ namespace BudgetStuffTests
             return totalAmount;
         }
 
-        private static int EffectiveDays(Period period, Budget budget)
+        private static int EffectiveAmount(Budget budget, Period period)
         {
-            var startDate = period.StartDate < budget.FirstDay
-                ? budget.FirstDay
-                : period.StartDate;
-
-
-            var endDate = period.EndDate > budget.LastDay
-                ? budget.LastDay
-                : period.EndDate;
-
-            return (int) (endDate.AddDays(1) - startDate).TotalDays;
+            return budget.DailyAmount() * period.EffectiveDays(budget);
         }
 
         private static decimal EffectiveAmount(Period period, Budget budget)
@@ -51,11 +42,6 @@ namespace BudgetStuffTests
         private static bool OnlyOneBudget(List<Budget> budgets)
         {
             return budgets.Count == 1;
-        }
-
-        private static decimal EffectiveAmount(Budget budget, Period period)
-        {
-            return budget.DailyAmount() * EffectiveDays(period, budget);
         }
 
         private static bool IsFirstMonth(int index)
