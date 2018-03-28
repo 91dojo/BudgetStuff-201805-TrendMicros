@@ -23,7 +23,7 @@ namespace BudgetStuffTests
 
         private static int EffectiveAmount(Budget budget, Period period)
         {
-            return budget.DailyAmount() * period.EffectiveDays(budget);
+            return budget.DailyAmount() * period.EffectiveDays(budget, new Period(budget.FirstDay,budget.LastDay));
         }
 
         private static decimal EffectiveAmount(Period period, Budget budget)

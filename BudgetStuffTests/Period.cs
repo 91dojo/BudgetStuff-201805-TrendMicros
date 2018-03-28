@@ -21,7 +21,7 @@ namespace BudgetStuffTests
             return (EndDate - StartDate).Days + 1;
         }
 
-        public int EffectiveDays(Budget budget)
+        public int EffectiveDays(Budget budget, Period period)
         {
             var startDate = StartDate < budget.FirstDay
                 ? budget.FirstDay
