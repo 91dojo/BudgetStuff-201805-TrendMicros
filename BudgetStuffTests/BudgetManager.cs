@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BudgetStuffTests
 {
@@ -16,11 +17,13 @@ namespace BudgetStuffTests
         {
             var period = new Period(startDate, endDate);
 
-            var budgetMap = _repo.GetBudget(startDate, endDate);
+            var budgets = _repo.GetBudgets();
+            var budgetMap = budgets.ToDictionary(x => x.FirstDay, x => x);
+            //var budgetMap = _repo.GetBudget(startDate, endDate);
             if (IsOnlyOneMonth(budgetMap))
             {
                 return EffectiveAmount(DateTime.DaysInMonth(startDate.Year, startDate.Month),
-                    budgetMap[startDate].amount,
+                    budgetMap[startDate].Amount,
                     period.Days());
             }
             else
@@ -42,7 +45,7 @@ namespace BudgetStuffTests
                     {
                         timeSpan = DateTime.DaysInMonth(month.Year, month.Month);
                     }
-                    amount += EffectiveAmount(DateTime.DaysInMonth(month.Year, month.Month), budgetMap[month].amount,
+                    amount += EffectiveAmount(DateTime.DaysInMonth(month.Year, month.Month), budgetMap[month].Amount,
                         timeSpan);
                     index++;
                 }
