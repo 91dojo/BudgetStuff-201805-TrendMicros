@@ -98,13 +98,8 @@ namespace BudgetStuffTests
         }
 
         [TestMethod]
-        public void MultiMonth_NoBudget()
+        public void multiple_budgets_which_amount_are_both_0()
         {
-            // arrange
-            var startdate = new DateTime(2017, 03, 01);
-            var enddate = new DateTime(2017, 04, 30);
-
-            // mock
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
@@ -117,7 +112,7 @@ namespace BudgetStuffTests
                 }
             });
 
-            AmountShouldBe(startdate, enddate, 0);
+            AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 04, 30), 0);
         }
 
         [TestMethod]
