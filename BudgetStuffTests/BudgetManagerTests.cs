@@ -135,13 +135,8 @@ namespace BudgetStuffTests
         }
 
         [TestMethod]
-        public void MultiMonth_1halfBudget()
+        public void multiple_budgets_which_period_partial_overlap_last_budget_month()
         {
-            // arrange
-            var startdate = new DateTime(2017, 01, 01);
-            var enddate = new DateTime(2017, 02, 15);
-
-            // mock
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
@@ -154,7 +149,7 @@ namespace BudgetStuffTests
                 }
             });
 
-            AmountShouldBe(startdate, enddate, 3115);
+            AmountShouldBe(new DateTime(2017, 01, 01), new DateTime(2017, 02, 15), 3115);
         }
 
         [TestMethod]
