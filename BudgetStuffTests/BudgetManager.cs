@@ -18,7 +18,13 @@ namespace BudgetStuffTests
                 throw new InvalidException();
 
             var budgetMap = _repo.GetBudget(startDate, endDate);
-            if (IsMultipleBudgets(budgetMap))
+            if (budgetMap.Keys.Count == 1)
+            {
+                var daysOfPeriod = DaysOfPeriod(startDate, endDate);
+                return GetAmount(DateTime.DaysInMonth(startDate.Year, startDate.Month), budgetMap[startDate].amount,
+                    daysOfPeriod);
+            }
+            else
             {
                 decimal amount = 0;
                 int index = 0;
@@ -43,9 +49,12 @@ namespace BudgetStuffTests
                 }
                 return amount;
             }
-            var timeSpan2 = (endDate - startDate).Days + 1;
-            return GetAmount(DateTime.DaysInMonth(startDate.Year, startDate.Month), budgetMap[startDate].amount,
-                timeSpan2);
+        }
+
+        private static int DaysOfPeriod(DateTime startDate, DateTime endDate)
+        {
+            var daysOfPeriod = (endDate - startDate).Days + 1;
+            return daysOfPeriod;
         }
 
         private static bool IsLastMonth(int index, Dictionary<DateTime, Budget> budgetMap)
@@ -56,11 +65,6 @@ namespace BudgetStuffTests
         private static bool IsFirstMonth(int index)
         {
             return index == 0;
-        }
-
-        private static bool IsMultipleBudgets(Dictionary<DateTime, Budget> budgetMap)
-        {
-            return budgetMap.Keys.Count > 1;
         }
 
         private static decimal GetAmount(int monthdays, int amount, int actualdays)
