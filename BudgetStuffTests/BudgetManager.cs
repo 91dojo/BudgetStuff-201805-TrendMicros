@@ -17,14 +17,8 @@ namespace BudgetStuffTests
         {
             var period = new Period(startDate, endDate);
 
-            var budgets = _repo.GetBudgets();
-            return budgets.Sum(b => EffectiveAmount(b, period));
-            decimal totalAmount = 0;
-            foreach (var budget in budgets)
-            {
-                totalAmount += EffectiveAmount(budget, period);
-            }
-            return totalAmount;
+            return _repo.GetBudgets()
+                .Sum(b => EffectiveAmount(b, period));
         }
 
         private static int EffectiveAmount(Budget budget, Period period)
