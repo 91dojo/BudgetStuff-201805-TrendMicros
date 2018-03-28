@@ -24,21 +24,7 @@ namespace BudgetStuffTests
             {
                 var effectiveDays = EffectiveDays(period, budget);
 
-                totalAmount += EffectiveAmount(
-                    budget.DaysOfBudgetMonth(),
-                    budget.Amount,
-                    effectiveDays);
-            }
-            return totalAmount;
-            int index = 0;
-            foreach (var month in budgetMap.Keys)
-            {
-                var effectiveDays = EffectiveDays(period, budgets[index]);
-
-                totalAmount += EffectiveAmount(DateTime.DaysInMonth(month.Year, month.Month),
-                    budgetMap[month].Amount,
-                    effectiveDays);
-                index++;
+                totalAmount += EffectiveAmount(effectiveDays, budget);
             }
             return totalAmount;
         }
@@ -69,9 +55,9 @@ namespace BudgetStuffTests
             return budgets.Count == 1;
         }
 
-        private static decimal EffectiveAmount(int daysOfBudgetMonth, int amountOfBudget, int effectiveDays)
+        private static decimal EffectiveAmount(int effectiveDays, Budget budget)
         {
-            return amountOfBudget / daysOfBudgetMonth * effectiveDays;
+            return budget.DailyAmount() * effectiveDays;
         }
 
         private static bool IsFirstMonth(int index)
