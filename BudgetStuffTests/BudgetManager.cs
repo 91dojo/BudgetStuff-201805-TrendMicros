@@ -19,7 +19,8 @@ namespace BudgetStuffTests
             var budgetMap = _repo.GetBudget(startDate, endDate);
             if (IsOnlyOneMonth(budgetMap))
             {
-                return GetAmount(DateTime.DaysInMonth(startDate.Year, startDate.Month), budgetMap[startDate].amount,
+                return EffectiveAmount(DateTime.DaysInMonth(startDate.Year, startDate.Month),
+                    budgetMap[startDate].amount,
                     period.Days());
             }
             else
@@ -41,7 +42,7 @@ namespace BudgetStuffTests
                     {
                         timeSpan = DateTime.DaysInMonth(month.Year, month.Month);
                     }
-                    amount += GetAmount(DateTime.DaysInMonth(month.Year, month.Month), budgetMap[month].amount,
+                    amount += EffectiveAmount(DateTime.DaysInMonth(month.Year, month.Month), budgetMap[month].amount,
                         timeSpan);
                     index++;
                 }
@@ -54,9 +55,9 @@ namespace BudgetStuffTests
             return budgetMap.Keys.Count == 1;
         }
 
-        private static decimal GetAmount(int monthdays, int amount, int actualdays)
+        private static decimal EffectiveAmount(int daysOfBudgetMonth, int amountOfBudget, int effectiveDays)
         {
-            return amount / monthdays * actualdays;
+            return amountOfBudget / daysOfBudgetMonth * effectiveDays;
         }
 
         private static bool IsFirstMonth(int index)
