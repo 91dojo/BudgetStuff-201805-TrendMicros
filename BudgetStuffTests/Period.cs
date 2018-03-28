@@ -13,13 +13,8 @@ namespace BudgetStuffTests
             EndDate = endDate;
         }
 
-        public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
-
-        public int Days()
-        {
-            return (EndDate - StartDate).Days + 1;
-        }
+        public DateTime StartDate { get; private set; }
 
         public int EffectiveDays(Period period)
         {
