@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 
@@ -86,20 +87,13 @@ namespace BudgetStuffTests
         [TestMethod]
         public void LeapYearFebHasBudget()
         {
-            _repository.GetBudgets().ReturnsForAnyArgs(new List<Budget>
-            {
-                new Budget {YearMonth = "201602", Amount = 29}
-            });
-
-            //GivenBudget(new Dictionary<DateTime, Budget>()
-            //{
-            //    {
-            //        new DateTime(2016, 02, 01),
-            //        new Budget() {Amount = 29}
-            //    }
-            //});
-
+            GivenBudgets(new Budget {YearMonth = "201602", Amount = 29});
             AmountShouldBe(new DateTime(2016, 02, 01), new DateTime(2016, 02, 15), 15);
+        }
+
+        private void GivenBudgets(params Budget[] budgets)
+        {
+            _repository.GetBudgets().ReturnsForAnyArgs(budgets.ToList());
         }
 
         [TestMethod]
