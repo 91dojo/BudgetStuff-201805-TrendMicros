@@ -151,10 +151,5 @@ namespace BudgetStuffTests
         {
             Assert.AreEqual(expected, _budgetmanager.TotalAmount(startdate, enddate));
         }
-
-        private void GivenBudget(Dictionary<DateTime, Budget> budgets)
-        {
-            _repository.GetBudget(new DateTime(), new DateTime()).ReturnsForAnyArgs(budgets);
-        }
     }
 }
