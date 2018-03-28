@@ -31,56 +31,28 @@ namespace BudgetStuffTests
         [TestMethod]
         public void one_budget_which_amount_is_0()
         {
-            GivenBudget(new Dictionary<DateTime, Budget>()
-            {
-                {
-                    new DateTime(2017, 03, 01),
-                    new Budget() {Amount = 0}
-                }
-            });
-
+            GivenBudgets(new Budget {YearMonth = "201703", Amount = 0});
             AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 03, 31), 0);
         }
 
         [TestMethod]
         public void period_inside_one_budget_month()
         {
-            GivenBudget(new Dictionary<DateTime, Budget>()
-            {
-                {
-                    new DateTime(2017, 03, 01),
-                    new Budget() {Amount = 3100}
-                }
-            });
-
+            GivenBudgets(new Budget {YearMonth = "201703", Amount = 3100});
             AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 03, 31), 3100);
         }
 
         [TestMethod]
         public void one_effective_day_period_inside_one_budget()
         {
-            GivenBudget(new Dictionary<DateTime, Budget>()
-            {
-                {
-                    new DateTime(2017, 03, 01),
-                    new Budget() {Amount = 3100}
-                }
-            });
-
+            GivenBudgets(new Budget {YearMonth = "201703", Amount = 3100});
             AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 03, 01), 100);
         }
 
         [TestMethod]
         public void two_effective_days_which_period_inside_one_budget_month()
         {
-            GivenBudget(new Dictionary<DateTime, Budget>()
-            {
-                {
-                    new DateTime(2017, 03, 01),
-                    new Budget() {Amount = 3100}
-                }
-            });
-
+            GivenBudgets(new Budget {YearMonth = "201703", Amount = 3100});
             AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 03, 02), 200);
         }
 
@@ -99,17 +71,10 @@ namespace BudgetStuffTests
         [TestMethod]
         public void multiple_budgets_which_amount_are_both_0()
         {
-            GivenBudget(new Dictionary<DateTime, Budget>()
-            {
-                {
-                    new DateTime(2017, 03, 01),
-                    new Budget() {Amount = 0}
-                },
-                {
-                    new DateTime(2017, 04, 01),
-                    new Budget() {Amount = 0}
-                }
-            });
+            GivenBudgets(
+                new Budget {YearMonth = "201703", Amount = 0},
+                new Budget {YearMonth = "201704", Amount = 0}
+            );
 
             AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 04, 30), 0);
         }
@@ -117,18 +82,10 @@ namespace BudgetStuffTests
         [TestMethod]
         public void multiple_budgets_with_amount()
         {
-            // mock
-            GivenBudget(new Dictionary<DateTime, Budget>()
-            {
-                {
-                    new DateTime(2017, 03, 01),
-                    new Budget() {Amount = 3100}
-                },
-                {
-                    new DateTime(2017, 04, 01),
-                    new Budget() {Amount = 30}
-                }
-            });
+            GivenBudgets(
+                new Budget {YearMonth = "201703", Amount = 3100},
+                new Budget {YearMonth = "201704", Amount = 30}
+            );
 
             AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 04, 30), 3130);
         }
@@ -136,17 +93,10 @@ namespace BudgetStuffTests
         [TestMethod]
         public void multiple_budgets_which_period_partial_overlap_last_budget_month()
         {
-            GivenBudget(new Dictionary<DateTime, Budget>()
-            {
-                {
-                    new DateTime(2017, 01, 01),
-                    new Budget() {Amount = 3100}
-                },
-                {
-                    new DateTime(2017, 02, 01),
-                    new Budget() {Amount = 28}
-                }
-            });
+            GivenBudgets(
+                new Budget {YearMonth = "201701", Amount = 3100},
+                new Budget {YearMonth = "201702", Amount = 28}
+            );
 
             AmountShouldBe(new DateTime(2017, 01, 01), new DateTime(2017, 02, 15), 3115);
         }
@@ -154,17 +104,10 @@ namespace BudgetStuffTests
         [TestMethod]
         public void MultiMonth_1Budget_1noBudget()
         {
-            GivenBudget(new Dictionary<DateTime, Budget>()
-            {
-                {
-                    new DateTime(2017, 03, 01),
-                    new Budget() {Amount = 0}
-                },
-                {
-                    new DateTime(2017, 04, 01),
-                    new Budget() {Amount = 300}
-                }
-            });
+            GivenBudgets(
+                new Budget {YearMonth = "201703", Amount = 0},
+                new Budget {YearMonth = "201704", Amount = 300}
+            );
 
             AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 04, 30), 300);
         }
@@ -172,17 +115,10 @@ namespace BudgetStuffTests
         [TestMethod]
         public void MultiMonth_1noBudget_1Budget()
         {
-            GivenBudget(new Dictionary<DateTime, Budget>()
-            {
-                {
-                    new DateTime(2017, 03, 01),
-                    new Budget() {Amount = 310}
-                },
-                {
-                    new DateTime(2017, 04, 01),
-                    new Budget() {Amount = 0}
-                }
-            });
+            GivenBudgets(
+                new Budget {YearMonth = "201703", Amount = 310},
+                new Budget {YearMonth = "201704", Amount = 0}
+            );
 
             AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 04, 30), 310);
         }
@@ -190,21 +126,11 @@ namespace BudgetStuffTests
         [TestMethod]
         public void MultiMonth_1Budget_1noBudget_1Budget()
         {
-            GivenBudget(new Dictionary<DateTime, Budget>()
-            {
-                {
-                    new DateTime(2017, 03, 01),
-                    new Budget() {Amount = 3100}
-                },
-                {
-                    new DateTime(2017, 04, 01),
-                    new Budget() {Amount = 0}
-                },
-                {
-                    new DateTime(2017, 05, 01),
-                    new Budget() {Amount = 31}
-                }
-            });
+            GivenBudgets(
+                new Budget {YearMonth = "201703", Amount = 3100},
+                new Budget {YearMonth = "201704", Amount = 0},
+                new Budget {YearMonth = "201705", Amount = 31}
+            );
 
             AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 05, 31), 3131);
         }
@@ -212,21 +138,11 @@ namespace BudgetStuffTests
         [TestMethod]
         public void MultiMonth_1noBudget_1Budget_1noBudget()
         {
-            GivenBudget(new Dictionary<DateTime, Budget>()
-            {
-                {
-                    new DateTime(2017, 03, 01),
-                    new Budget() {Amount = 0}
-                },
-                {
-                    new DateTime(2017, 04, 01),
-                    new Budget() {Amount = 300}
-                },
-                {
-                    new DateTime(2017, 05, 01),
-                    new Budget() {Amount = 0}
-                }
-            });
+            GivenBudgets(
+                new Budget {YearMonth = "201703", Amount = 0},
+                new Budget {YearMonth = "201704", Amount = 300},
+                new Budget {YearMonth = "201705", Amount = 0}
+            );
 
             AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 05, 31), 300);
         }
