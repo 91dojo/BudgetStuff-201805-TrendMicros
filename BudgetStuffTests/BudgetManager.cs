@@ -44,6 +44,19 @@ namespace BudgetStuffTests
         {
             int effectiveDays = 0;
             var daysOfBudgetMonth = budgets[index].DaysOfBudgetMonth();
+            var startDate = period.StartDate;
+            if (period.StartDate < budgets[index].FirstDay)
+            {
+                startDate = budgets[index].FirstDay;
+            }
+
+            var endDate = period.EndDate;
+            if (period.EndDate > budgets[index].LastDay)
+            {
+                endDate = budgets[index].LastDay;
+            }
+
+            return (int) (endDate.AddDays(1) - startDate).TotalDays;
             if (IsFirstMonth(index))
             {
                 effectiveDays = daysOfBudgetMonth - period.StartDate.Day + 1;

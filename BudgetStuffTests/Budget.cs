@@ -13,6 +13,14 @@ namespace BudgetStuffTests
 
         public string YearMonth { get; set; }
 
+        public DateTime LastDay
+        {
+            get
+            {
+                return DateTime.ParseExact(YearMonth + DaysOfBudgetMonth(), "yyyyMMdd", null);
+            }
+        }
+
         public int DaysOfBudgetMonth()
         {
             var daysOfBudgetMonth = DateTime.DaysInMonth(FirstDay.Year, FirstDay.Month);
