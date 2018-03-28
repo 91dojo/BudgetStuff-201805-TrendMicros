@@ -29,7 +29,7 @@ namespace BudgetStuffTests
                 int index = 0;
                 foreach (var month in budgetMap.Keys)
                 {
-                    var effectiveDays = EffectiveDays(new Period(startDate, endDate), index, month, budgetMap);
+                    var effectiveDays = EffectiveDays(new Period(startDate, endDate), index, month, budgets);
 
                     totalAmount += EffectiveAmount(DateTime.DaysInMonth(month.Year, month.Month),
                         budgetMap[month].Amount,
@@ -40,15 +40,14 @@ namespace BudgetStuffTests
             }
         }
 
-        private static int EffectiveDays(Period period, int index, DateTime month,
-            Dictionary<DateTime, Budget> budgetMap)
+        private static int EffectiveDays(Period period, int index, DateTime month, List<Budget> budgets)
         {
             int effectiveDays = 0;
             if (IsFirstMonth(index))
             {
                 effectiveDays = DateTime.DaysInMonth(month.Year, month.Month) - period.StartDate.Day + 1;
             }
-            else if (IsLastMonth(index, budgetMap))
+            else if (IsLastMonth(index, budgets))
             {
                 effectiveDays = period.EndDate.Day;
             }
@@ -81,9 +80,9 @@ namespace BudgetStuffTests
             return index == 0;
         }
 
-        private static bool IsLastMonth(int index, Dictionary<DateTime, Budget> budgetMap)
+        private static bool IsLastMonth(int index, List<Budget> budgets)
         {
-            return index == budgetMap.Keys.Count - 1;
+            return index == budgets.Count - 1;
         }
 
         // private decimal GetBudget
