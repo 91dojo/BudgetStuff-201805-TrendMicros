@@ -25,28 +25,29 @@ namespace BudgetStuffTests
             }
             else
             {
-                decimal amount = 0;
+                decimal totalAmount = 0;
                 int index = 0;
                 foreach (var month in budgetMap.Keys)
                 {
-                    int timeSpan = 0;
+                    int effectiveDays = 0;
                     if (IsFirstMonth(index))
                     {
-                        timeSpan = DateTime.DaysInMonth(month.Year, month.Month) - startDate.Day + 1;
+                        effectiveDays = DateTime.DaysInMonth(month.Year, month.Month) - startDate.Day + 1;
                     }
                     else if (IsLastMonth(index, budgetMap))
                     {
-                        timeSpan = endDate.Day;
+                        effectiveDays = endDate.Day;
                     }
                     else
                     {
-                        timeSpan = DateTime.DaysInMonth(month.Year, month.Month);
+                        effectiveDays = DateTime.DaysInMonth(month.Year, month.Month);
                     }
-                    amount += EffectiveAmount(DateTime.DaysInMonth(month.Year, month.Month), budgetMap[month].Amount,
-                        timeSpan);
+                    totalAmount += EffectiveAmount(DateTime.DaysInMonth(month.Year, month.Month),
+                        budgetMap[month].Amount,
+                        effectiveDays);
                     index++;
                 }
-                return amount;
+                return totalAmount;
             }
         }
 
