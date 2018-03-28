@@ -19,25 +19,18 @@ namespace BudgetStuffTests
 
             var budgets = _repo.GetBudgets();
             var budgetMap = budgets.ToDictionary(x => x.FirstDay, x => x);
-            if (OnlyOneBudget(budgets))
+            decimal totalAmount = 0;
+            int index = 0;
+            foreach (var month in budgetMap.Keys)
             {
-                return EffectiveAmount(period, budgets[0]);
-            }
-            else
-            {
-                decimal totalAmount = 0;
-                int index = 0;
-                foreach (var month in budgetMap.Keys)
-                {
-                    var effectiveDays = EffectiveDays(new Period(startDate, endDate), budgets[index]);
+                var effectiveDays = EffectiveDays(period, budgets[index]);
 
-                    totalAmount += EffectiveAmount(DateTime.DaysInMonth(month.Year, month.Month),
-                        budgetMap[month].Amount,
-                        effectiveDays);
-                    index++;
-                }
-                return totalAmount;
+                totalAmount += EffectiveAmount(DateTime.DaysInMonth(month.Year, month.Month),
+                    budgetMap[month].Amount,
+                    effectiveDays);
+                index++;
             }
+            return totalAmount;
         }
 
         private static int EffectiveDays(Period period, Budget budget)
