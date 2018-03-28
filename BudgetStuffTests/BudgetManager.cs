@@ -6,47 +6,64 @@ namespace BudgetStuffTests
     public class BudgetManager
     {
         private readonly IRepository<Budget> _repo;
+
         public BudgetManager(IRepository<Budget> repo)
         {
             _repo = repo;
         }
 
-        public decimal TotalAmount(DateTime startdate, DateTime enddate)
+        public decimal TotalAmount(DateTime startDate, DateTime endDate)
         {
-            if (startdate > enddate)
+            if (startDate > endDate)
                 throw new InvalidException();
-            var BudgetMap = _repo.GetBudget(startdate, enddate);
-            if (BudgetMap.Keys.Count > 1)
+
+            var budgetMap = _repo.GetBudget(startDate, endDate);
+            if (IsMultipleBudgets(budgetMap))
             {
                 decimal amount = 0;
                 int index = 0;
-                foreach (var month in BudgetMap.Keys)
+                foreach (var month in budgetMap.Keys)
                 {
                     int timeSpan = 0;
-                    if (index == 0)
+                    if (IsFirstMonth(index))
                     {
-                         timeSpan = DateTime.DaysInMonth(month.Year, month.Month) - startdate.Day + 1;
+                        timeSpan = DateTime.DaysInMonth(month.Year, month.Month) - startDate.Day + 1;
                     }
-                    else if (index == BudgetMap.Keys.Count - 1)
+                    else if (IsLastMonth(index, budgetMap))
                     {
-                        timeSpan = enddate.Day;
+                        timeSpan = endDate.Day;
                     }
                     else
                     {
                         timeSpan = DateTime.DaysInMonth(month.Year, month.Month);
                     }
-                    // var timeSpan2 = DateTime.DaysInMonth(month.Year, month.Month) - startdate.Day + 1;
-                    amount += getAmount(DateTime.DaysInMonth(month.Year, month.Month), BudgetMap[month].amount, timeSpan);
-                    //amount += BudgetMap[month].amount;
+                    amount += GetAmount(DateTime.DaysInMonth(month.Year, month.Month), budgetMap[month].amount,
+                        timeSpan);
                     index++;
                 }
                 return amount;
             }
-            var timeSpan2 = (enddate - startdate).Days+1;
-            return getAmount(DateTime.DaysInMonth(startdate.Year, startdate.Month), BudgetMap[startdate].amount, timeSpan2);
+            var timeSpan2 = (endDate - startDate).Days + 1;
+            return GetAmount(DateTime.DaysInMonth(startDate.Year, startDate.Month), budgetMap[startDate].amount,
+                timeSpan2);
         }
 
-        private static decimal getAmount(int monthdays, int amount, int actualdays)
+        private static bool IsLastMonth(int index, Dictionary<DateTime, Budget> budgetMap)
+        {
+            return index == budgetMap.Keys.Count - 1;
+        }
+
+        private static bool IsFirstMonth(int index)
+        {
+            return index == 0;
+        }
+
+        private static bool IsMultipleBudgets(Dictionary<DateTime, Budget> budgetMap)
+        {
+            return budgetMap.Keys.Count > 1;
+        }
+
+        private static decimal GetAmount(int monthdays, int amount, int actualdays)
         {
             return amount / monthdays * actualdays;
             //return BudgetMap[startdate].amount / DateTime.DaysInMonth(startdate.Year, startdate.Month) * (timeSpan.Days + 1);
