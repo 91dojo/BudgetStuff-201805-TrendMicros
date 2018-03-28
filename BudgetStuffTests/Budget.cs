@@ -31,5 +31,10 @@ namespace BudgetStuffTests
         {
             return Amount / DaysOfBudgetMonth();
         }
+
+        public int EffectiveAmount(Period period)
+        {
+            return DailyAmount() * period.EffectiveDays(new Period(FirstDay,LastDay));
+        }
     }
 }

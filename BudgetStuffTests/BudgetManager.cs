@@ -18,12 +18,7 @@ namespace BudgetStuffTests
             var period = new Period(startDate, endDate);
 
             return _repo.GetBudgets()
-                .Sum(b => EffectiveAmount(b, period));
-        }
-
-        private static int EffectiveAmount(Budget budget, Period period)
-        {
-            return budget.DailyAmount() * period.EffectiveDays(new Period(budget.FirstDay,budget.LastDay));
+                .Sum(b => b.EffectiveAmount(period));
         }
 
         private static decimal EffectiveAmount(Period period, Budget budget)
