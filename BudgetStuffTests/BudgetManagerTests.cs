@@ -6,7 +6,7 @@ using NSubstitute;
 namespace BudgetStuffTests
 {
     [TestClass]
-    public class UnitTest1
+    public class BudgetManagerTests
     {
         private IRepository<Budget> _repository = Substitute.For<IRepository<Budget>>();
         private BudgetManager _budgetmanager;
@@ -26,7 +26,7 @@ namespace BudgetStuffTests
             var enddate = DateTime.Now.AddDays(-1);
             //var budgetmanager = new BudgetManager();
             decimal expected = 0;
-            
+
             //act
             var actual = _budgetmanager.TotalAmount(startdate, enddate);
         }
@@ -42,11 +42,11 @@ namespace BudgetStuffTests
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
-                    new DateTime(2017,03,01),
+                    new DateTime(2017, 03, 01),
                     new Budget() {amount = 0}
                 }
             });
-            
+
             AmountShouldBe(startdate, enddate, 0);
         }
 
@@ -61,7 +61,7 @@ namespace BudgetStuffTests
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
-                    new DateTime(2017,03,01),
+                    new DateTime(2017, 03, 01),
                     new Budget() {amount = 3100}
                 }
             });
@@ -80,7 +80,7 @@ namespace BudgetStuffTests
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
-                    new DateTime(2017,03,01),
+                    new DateTime(2017, 03, 01),
                     new Budget() {amount = 3100}
                 }
             });
@@ -99,7 +99,7 @@ namespace BudgetStuffTests
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
-                    new DateTime(2017,03,01),
+                    new DateTime(2017, 03, 01),
                     new Budget() {amount = 3100}
                 }
             });
@@ -118,7 +118,7 @@ namespace BudgetStuffTests
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
-                    new DateTime(2016,02,01),
+                    new DateTime(2016, 02, 01),
                     new Budget() {amount = 29}
                 }
             });
@@ -137,11 +137,11 @@ namespace BudgetStuffTests
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
-                    new DateTime(2017,03,01),
+                    new DateTime(2017, 03, 01),
                     new Budget() {amount = 0}
                 },
                 {
-                    new DateTime(2017,04,01), 
+                    new DateTime(2017, 04, 01),
                     new Budget() {amount = 0}
                 }
             });
@@ -160,11 +160,11 @@ namespace BudgetStuffTests
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
-                    new DateTime(2017,03,01),
+                    new DateTime(2017, 03, 01),
                     new Budget() {amount = 3100}
                 },
                 {
-                    new DateTime(2017,04,01),
+                    new DateTime(2017, 04, 01),
                     new Budget() {amount = 30}
                 }
             });
@@ -183,11 +183,11 @@ namespace BudgetStuffTests
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
-                    new DateTime(2017,01,01),
+                    new DateTime(2017, 01, 01),
                     new Budget() {amount = 3100}
                 },
                 {
-                    new DateTime(2017,02,01),
+                    new DateTime(2017, 02, 01),
                     new Budget() {amount = 28}
                 }
             });
@@ -206,11 +206,11 @@ namespace BudgetStuffTests
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
-                    new DateTime(2017,03,01),
+                    new DateTime(2017, 03, 01),
                     new Budget() {amount = 0}
                 },
                 {
-                    new DateTime(2017,04,01),
+                    new DateTime(2017, 04, 01),
                     new Budget() {amount = 300}
                 }
             });
@@ -229,11 +229,11 @@ namespace BudgetStuffTests
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
-                    new DateTime(2017,03,01),
+                    new DateTime(2017, 03, 01),
                     new Budget() {amount = 310}
                 },
                 {
-                    new DateTime(2017,04,01),
+                    new DateTime(2017, 04, 01),
                     new Budget() {amount = 0}
                 }
             });
@@ -252,17 +252,17 @@ namespace BudgetStuffTests
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
-                    new DateTime(2017,03,01),
+                    new DateTime(2017, 03, 01),
                     new Budget() {amount = 3100}
                 },
                 {
-                    new DateTime(2017,04,01),
+                    new DateTime(2017, 04, 01),
                     new Budget() {amount = 0}
                 },
                 {
-                new DateTime(2017,05,01),
-                new Budget() {amount = 31}
-            }
+                    new DateTime(2017, 05, 01),
+                    new Budget() {amount = 31}
+                }
             });
 
             AmountShouldBe(startdate, enddate, 3131);
@@ -279,15 +279,15 @@ namespace BudgetStuffTests
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
-                    new DateTime(2017,03,01),
+                    new DateTime(2017, 03, 01),
                     new Budget() {amount = 0}
                 },
                 {
-                    new DateTime(2017,04,01),
+                    new DateTime(2017, 04, 01),
                     new Budget() {amount = 300}
                 },
                 {
-                    new DateTime(2017,05,01),
+                    new DateTime(2017, 05, 01),
                     new Budget() {amount = 0}
                 }
             });
@@ -297,7 +297,7 @@ namespace BudgetStuffTests
 
         private void AmountShouldBe(DateTime startdate, DateTime enddate, decimal expected)
         {
-            Assert.AreEqual(expected,_budgetmanager.TotalAmount(startdate, enddate));
+            Assert.AreEqual(expected, _budgetmanager.TotalAmount(startdate, enddate));
         }
 
         private void GivenBudget(Dictionary<DateTime, Budget> mockBudget)
@@ -305,6 +305,4 @@ namespace BudgetStuffTests
             _repository.GetBudget(new DateTime(), new DateTime()).ReturnsForAnyArgs(mockBudget);
         }
     }
-
-
 }
