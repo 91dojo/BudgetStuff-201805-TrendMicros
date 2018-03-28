@@ -29,7 +29,7 @@ namespace BudgetStuffTests
                 int index = 0;
                 foreach (var month in budgetMap.Keys)
                 {
-                    var effectiveDays = EffectiveDays(new Period(startDate, endDate), index, month, budgets);
+                    var effectiveDays = EffectiveDays(new Period(startDate, endDate), budgets[index]);
 
                     totalAmount += EffectiveAmount(DateTime.DaysInMonth(month.Year, month.Month),
                         budgetMap[month].Amount,
@@ -40,36 +40,18 @@ namespace BudgetStuffTests
             }
         }
 
-        private static int EffectiveDays(Period period, int index, DateTime month, List<Budget> budgets)
+        private static int EffectiveDays(Period period, Budget budget)
         {
-            int effectiveDays = 0;
-            var daysOfBudgetMonth = budgets[index].DaysOfBudgetMonth();
-            var startDate = period.StartDate;
-            if (period.StartDate < budgets[index].FirstDay)
-            {
-                startDate = budgets[index].FirstDay;
-            }
+            var startDate = period.StartDate < budget.FirstDay
+                ? budget.FirstDay
+                : period.StartDate;
 
-            var endDate = period.EndDate;
-            if (period.EndDate > budgets[index].LastDay)
-            {
-                endDate = budgets[index].LastDay;
-            }
+
+            var endDate = period.EndDate > budget.LastDay
+                ? budget.LastDay
+                : period.EndDate;
 
             return (int) (endDate.AddDays(1) - startDate).TotalDays;
-            if (IsFirstMonth(index))
-            {
-                effectiveDays = daysOfBudgetMonth - period.StartDate.Day + 1;
-            }
-            else if (IsLastMonth(index, budgets))
-            {
-                effectiveDays = period.EndDate.Day;
-            }
-            else
-            {
-                effectiveDays = daysOfBudgetMonth;
-            }
-            return effectiveDays;
         }
 
         private static decimal EffectiveAmount(Period period, Budget budget)
