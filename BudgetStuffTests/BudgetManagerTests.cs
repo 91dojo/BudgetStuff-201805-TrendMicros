@@ -155,11 +155,6 @@ namespace BudgetStuffTests
         [TestMethod]
         public void MultiMonth_1Budget_1noBudget()
         {
-            // arrange
-            var startdate = new DateTime(2017, 03, 01);
-            var enddate = new DateTime(2017, 04, 30);
-
-            // mock
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
@@ -172,17 +167,12 @@ namespace BudgetStuffTests
                 }
             });
 
-            AmountShouldBe(startdate, enddate, 300);
+            AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 04, 30), 300);
         }
 
         [TestMethod]
         public void MultiMonth_1noBudget_1Budget()
         {
-            // arrange
-            var startdate = new DateTime(2017, 03, 01);
-            var enddate = new DateTime(2017, 04, 30);
-
-            // mock
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
@@ -195,17 +185,12 @@ namespace BudgetStuffTests
                 }
             });
 
-            AmountShouldBe(startdate, enddate, 310);
+            AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 04, 30), 310);
         }
 
         [TestMethod]
         public void MultiMonth_1Budget_1noBudget_1Budget()
         {
-            // arrange
-            var startdate = new DateTime(2017, 03, 01);
-            var enddate = new DateTime(2017, 05, 31);
-
-            // mock
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
@@ -222,17 +207,12 @@ namespace BudgetStuffTests
                 }
             });
 
-            AmountShouldBe(startdate, enddate, 3131);
+            AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 05, 31), 3131);
         }
 
         [TestMethod]
         public void MultiMonth_1noBudget_1Budget_1noBudget()
         {
-            // arrange
-            var startdate = new DateTime(2017, 03, 01);
-            var enddate = new DateTime(2017, 05, 31);
-
-            // mock
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
@@ -249,7 +229,7 @@ namespace BudgetStuffTests
                 }
             });
 
-            AmountShouldBe(startdate, enddate, 300);
+            AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 05, 31), 300);
         }
 
         private void AmountShouldBe(DateTime startdate, DateTime enddate, decimal expected)
