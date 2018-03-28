@@ -3,6 +3,23 @@ using System.Collections.Generic;
 
 namespace BudgetStuffTests
 {
+    public class Period
+    {
+        public Period(DateTime startDate, DateTime endDate)
+        {
+            StartDate = startDate;
+            EndDate = endDate;
+        }
+
+        public DateTime StartDate { get; private set; }
+        public DateTime EndDate { get; private set; }
+
+        public int Days()
+        {
+            return (EndDate - StartDate).Days + 1;
+        }
+    }
+
     public class BudgetManager
     {
         private readonly IRepository<Budget> _repo;
@@ -20,7 +37,7 @@ namespace BudgetStuffTests
             var budgetMap = _repo.GetBudget(startDate, endDate);
             if (IsOnlyOneMonth(budgetMap))
             {
-                var daysOfPeriod = DaysOfPeriod(startDate, endDate);
+                var daysOfPeriod = new Period(startDate, endDate).Days();
                 return GetAmount(DateTime.DaysInMonth(startDate.Year, startDate.Month), budgetMap[startDate].amount,
                     daysOfPeriod);
             }
@@ -54,12 +71,6 @@ namespace BudgetStuffTests
         private static bool IsOnlyOneMonth(Dictionary<DateTime, Budget> budgetMap)
         {
             return budgetMap.Keys.Count == 1;
-        }
-
-        private static int DaysOfPeriod(DateTime startDate, DateTime endDate)
-        {
-            var daysOfPeriod = (endDate - startDate).Days + 1;
-            return daysOfPeriod;
         }
 
         private static decimal GetAmount(int monthdays, int amount, int actualdays)
