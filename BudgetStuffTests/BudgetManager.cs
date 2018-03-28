@@ -22,9 +22,7 @@ namespace BudgetStuffTests
             decimal totalAmount = 0;
             foreach (var budget in budgets)
             {
-                var effectiveDays = EffectiveDays(period, budget);
-
-                totalAmount += EffectiveAmount(effectiveDays, budget);
+                totalAmount += EffectiveAmount(budget, period);
             }
             return totalAmount;
         }
@@ -55,9 +53,9 @@ namespace BudgetStuffTests
             return budgets.Count == 1;
         }
 
-        private static decimal EffectiveAmount(int effectiveDays, Budget budget)
+        private static decimal EffectiveAmount(Budget budget, Period period)
         {
-            return budget.DailyAmount() * effectiveDays;
+            return budget.DailyAmount() * EffectiveDays(period, budget);
         }
 
         private static bool IsFirstMonth(int index)
