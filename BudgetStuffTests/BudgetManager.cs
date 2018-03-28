@@ -43,9 +43,10 @@ namespace BudgetStuffTests
         private static int EffectiveDays(Period period, int index, DateTime month, List<Budget> budgets)
         {
             int effectiveDays = 0;
+            var daysOfBudgetMonth = budgets[index].DaysOfBudgetMonth();
             if (IsFirstMonth(index))
             {
-                effectiveDays = DateTime.DaysInMonth(month.Year, month.Month) - period.StartDate.Day + 1;
+                effectiveDays = daysOfBudgetMonth - period.StartDate.Day + 1;
             }
             else if (IsLastMonth(index, budgets))
             {
@@ -53,7 +54,7 @@ namespace BudgetStuffTests
             }
             else
             {
-                effectiveDays = DateTime.DaysInMonth(month.Year, month.Month);
+                effectiveDays = daysOfBudgetMonth;
             }
             return effectiveDays;
         }
