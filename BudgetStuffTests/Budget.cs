@@ -12,5 +12,11 @@ namespace BudgetStuffTests
         }
 
         public string YearMonth { get; set; }
+
+        public int DaysOfBudgetMonth()
+        {
+            var daysOfBudgetMonth = DateTime.DaysInMonth(FirstDay.Year, FirstDay.Month);
+            return daysOfBudgetMonth;
+        }
     }
 }

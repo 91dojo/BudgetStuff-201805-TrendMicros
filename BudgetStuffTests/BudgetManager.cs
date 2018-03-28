@@ -21,10 +21,11 @@ namespace BudgetStuffTests
             var budgetMap = budgets.ToDictionary(x => x.FirstDay, x => x);
             if (OnlyOneBudget(budgets))
             {
-                var daysOfBudgetMonth = DaysOfBudgetMonth(budgets);
+                var daysOfBudgetMonth = budgets[0].DaysOfBudgetMonth();
+                var amountOfBudget = budgets[0].Amount;
 
                 return EffectiveAmount(daysOfBudgetMonth,
-                    budgetMap[startDate].Amount,
+                    amountOfBudget,
                     period.Days());
             }
             else
@@ -52,12 +53,6 @@ namespace BudgetStuffTests
                 }
                 return amount;
             }
-        }
-
-        private static int DaysOfBudgetMonth(List<Budget> budgets)
-        {
-            var daysOfBudgetMonth = DateTime.DaysInMonth(budgets[0].FirstDay.Year, budgets[0].FirstDay.Month);
-            return daysOfBudgetMonth;
         }
 
         private static bool OnlyOneBudget(List<Budget> budgets)
