@@ -21,14 +21,10 @@ namespace BudgetStuffTests
         [ExpectedException(typeof(InvalidException))]
         public void InvalidDate()
         {
-            // arrange
-            var startdate = DateTime.Today;
-            var enddate = DateTime.Now.AddDays(-1);
-            //var budgetmanager = new BudgetManager();
-            decimal expected = 0;
+            var startDate = new DateTime(2017, 2, 1);
+            var endDate = new DateTime(2017, 1, 1);
 
-            //act
-            var actual = _budgetmanager.TotalAmount(startdate, enddate);
+            var actual = _budgetmanager.TotalAmount(startDate, endDate);
         }
 
         [TestMethod]
