@@ -54,12 +54,7 @@ namespace BudgetStuffTests
         {
             var effectiveDays = period.Days();
 
-            return DailyAmount(budget) * effectiveDays;
-        }
-
-        private static int DailyAmount(Budget budget)
-        {
-            return budget.Amount / budget.DaysOfBudgetMonth();
+            return budget.DailyAmount() * effectiveDays;
         }
 
         private static bool OnlyOneBudget(List<Budget> budgets)

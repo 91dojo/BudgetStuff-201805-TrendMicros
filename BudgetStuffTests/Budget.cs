@@ -18,5 +18,10 @@ namespace BudgetStuffTests
             var daysOfBudgetMonth = DateTime.DaysInMonth(FirstDay.Year, FirstDay.Month);
             return daysOfBudgetMonth;
         }
+
+        public int DailyAmount()
+        {
+            return Amount / DaysOfBudgetMonth();
+        }
     }
 }
