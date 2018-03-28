@@ -20,6 +20,16 @@ namespace BudgetStuffTests
             var budgets = _repo.GetBudgets();
             var budgetMap = budgets.ToDictionary(x => x.FirstDay, x => x);
             decimal totalAmount = 0;
+            foreach (var budget in budgets)
+            {
+                var effectiveDays = EffectiveDays(period, budget);
+
+                totalAmount += EffectiveAmount(
+                    budget.DaysOfBudgetMonth(),
+                    budget.Amount,
+                    effectiveDays);
+            }
+            return totalAmount;
             int index = 0;
             foreach (var month in budgetMap.Keys)
             {
