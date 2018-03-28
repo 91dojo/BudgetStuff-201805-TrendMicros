@@ -28,13 +28,8 @@ namespace BudgetStuffTests
         }
 
         [TestMethod]
-        public void OneMonthNoBudget()
+        public void one_budget_which_amount_is_0()
         {
-            // arrange
-            var startdate = new DateTime(2017, 03, 01);
-            var enddate = new DateTime(2017, 03, 31);
-
-            // mock
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
@@ -43,7 +38,7 @@ namespace BudgetStuffTests
                 }
             });
 
-            AmountShouldBe(startdate, enddate, 0);
+            AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 03, 31), 0);
         }
 
         [TestMethod]
@@ -296,9 +291,9 @@ namespace BudgetStuffTests
             Assert.AreEqual(expected, _budgetmanager.TotalAmount(startdate, enddate));
         }
 
-        private void GivenBudget(Dictionary<DateTime, Budget> mockBudget)
+        private void GivenBudget(Dictionary<DateTime, Budget> budgets)
         {
-            _repository.GetBudget(new DateTime(), new DateTime()).ReturnsForAnyArgs(mockBudget);
+            _repository.GetBudget(new DateTime(), new DateTime()).ReturnsForAnyArgs(budgets);
         }
     }
 }
