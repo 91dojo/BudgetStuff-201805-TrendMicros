@@ -86,11 +86,6 @@ namespace BudgetStuffTests
         [TestMethod]
         public void LeapYearFebHasBudget()
         {
-            // arrange
-            var startdate = new DateTime(2016, 02, 01);
-            var enddate = new DateTime(2016, 02, 15);
-
-            // mock
             GivenBudget(new Dictionary<DateTime, Budget>()
             {
                 {
@@ -99,7 +94,7 @@ namespace BudgetStuffTests
                 }
             });
 
-            AmountShouldBe(startdate, enddate, 15);
+            AmountShouldBe(new DateTime(2016, 02, 01), new DateTime(2016, 02, 15), 15);
         }
 
         [TestMethod]
