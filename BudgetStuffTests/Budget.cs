@@ -6,35 +6,32 @@ namespace BudgetStuffTests
     {
         public int Amount { get; set; }
 
-        public DateTime FirstDay
+        public string YearMonth { get; set; }
+
+        private DateTime FirstDay
         {
             get { return DateTime.ParseExact(YearMonth + "01", "yyyyMMdd", null); }
         }
 
-        public string YearMonth { get; set; }
-
-        public DateTime LastDay
+        private DateTime LastDay
         {
-            get
-            {
-                return DateTime.ParseExact(YearMonth + DaysOfBudgetMonth(), "yyyyMMdd", null);
-            }
-        }
-
-        public int DaysOfBudgetMonth()
-        {
-            var daysOfBudgetMonth = DateTime.DaysInMonth(FirstDay.Year, FirstDay.Month);
-            return daysOfBudgetMonth;
-        }
-
-        public int DailyAmount()
-        {
-            return Amount / DaysOfBudgetMonth();
+            get { return DateTime.ParseExact(YearMonth + DaysOfBudgetMonth(), "yyyyMMdd", null); }
         }
 
         public int EffectiveAmount(Period period)
         {
-            return DailyAmount() * period.EffectiveDays(new Period(FirstDay,LastDay));
+            return DailyAmount() * period.EffectiveDays(new Period(FirstDay, LastDay));
+        }
+
+        private int DailyAmount()
+        {
+            return Amount / DaysOfBudgetMonth();
+        }
+
+        private int DaysOfBudgetMonth()
+        {
+            var daysOfBudgetMonth = DateTime.DaysInMonth(FirstDay.Year, FirstDay.Month);
+            return daysOfBudgetMonth;
         }
     }
 }
