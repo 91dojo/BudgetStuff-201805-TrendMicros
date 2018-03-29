@@ -35,7 +35,7 @@ namespace BudgetStuffTests
             {
                 {
                     new DateTime(2017, 03, 01),
-                    new Budget() {amount = 0}
+                    new Budget() {Amount = 0}
                 }
             });
 
@@ -49,7 +49,7 @@ namespace BudgetStuffTests
             {
                 {
                     new DateTime(2017, 03, 01),
-                    new Budget() {amount = 3100}
+                    new Budget() {Amount = 3100}
                 }
             });
 
@@ -63,7 +63,7 @@ namespace BudgetStuffTests
             {
                 {
                     new DateTime(2017, 03, 01),
-                    new Budget() {amount = 3100}
+                    new Budget() {Amount = 3100}
                 }
             });
 
@@ -77,7 +77,7 @@ namespace BudgetStuffTests
             {
                 {
                     new DateTime(2017, 03, 01),
-                    new Budget() {amount = 3100}
+                    new Budget() {Amount = 3100}
                 }
             });
 
@@ -91,7 +91,7 @@ namespace BudgetStuffTests
             {
                 {
                     new DateTime(2016, 02, 01),
-                    new Budget() {amount = 29}
+                    new Budget() {Amount = 29}
                 }
             });
 
@@ -105,11 +105,11 @@ namespace BudgetStuffTests
             {
                 {
                     new DateTime(2017, 03, 01),
-                    new Budget() {amount = 0}
+                    new Budget() {Amount = 0}
                 },
                 {
                     new DateTime(2017, 04, 01),
-                    new Budget() {amount = 0}
+                    new Budget() {Amount = 0}
                 }
             });
 
@@ -123,11 +123,11 @@ namespace BudgetStuffTests
             {
                 {
                     new DateTime(2017, 03, 01),
-                    new Budget() {amount = 3100}
+                    new Budget() {Amount = 3100}
                 },
                 {
                     new DateTime(2017, 04, 01),
-                    new Budget() {amount = 30}
+                    new Budget() {Amount = 30}
                 }
             });
 
@@ -141,11 +141,11 @@ namespace BudgetStuffTests
             {
                 {
                     new DateTime(2017, 01, 01),
-                    new Budget() {amount = 3100}
+                    new Budget() {Amount = 3100}
                 },
                 {
                     new DateTime(2017, 02, 01),
-                    new Budget() {amount = 28}
+                    new Budget() {Amount = 28}
                 }
             });
 
@@ -159,11 +159,11 @@ namespace BudgetStuffTests
             {
                 {
                     new DateTime(2017, 03, 01),
-                    new Budget() {amount = 0}
+                    new Budget() {Amount = 0}
                 },
                 {
                     new DateTime(2017, 04, 01),
-                    new Budget() {amount = 300}
+                    new Budget() {Amount = 300}
                 }
             });
 
@@ -177,11 +177,11 @@ namespace BudgetStuffTests
             {
                 {
                     new DateTime(2017, 03, 01),
-                    new Budget() {amount = 310}
+                    new Budget() {Amount = 310}
                 },
                 {
                     new DateTime(2017, 04, 01),
-                    new Budget() {amount = 0}
+                    new Budget() {Amount = 0}
                 }
             });
 
@@ -195,15 +195,15 @@ namespace BudgetStuffTests
             {
                 {
                     new DateTime(2017, 03, 01),
-                    new Budget() {amount = 3100}
+                    new Budget() {Amount = 3100}
                 },
                 {
                     new DateTime(2017, 04, 01),
-                    new Budget() {amount = 0}
+                    new Budget() {Amount = 0}
                 },
                 {
                     new DateTime(2017, 05, 01),
-                    new Budget() {amount = 31}
+                    new Budget() {Amount = 31}
                 }
             });
 
@@ -217,15 +217,15 @@ namespace BudgetStuffTests
             {
                 {
                     new DateTime(2017, 03, 01),
-                    new Budget() {amount = 0}
+                    new Budget() {Amount = 0}
                 },
                 {
                     new DateTime(2017, 04, 01),
-                    new Budget() {amount = 300}
+                    new Budget() {Amount = 300}
                 },
                 {
                     new DateTime(2017, 05, 01),
-                    new Budget() {amount = 0}
+                    new Budget() {Amount = 0}
                 }
             });
 

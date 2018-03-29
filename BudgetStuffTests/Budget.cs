@@ -2,6 +2,6 @@
 {
     public class Budget
     {
-        public int amount { get; set; }
+        public int Amount { get; set; }
     }
 }

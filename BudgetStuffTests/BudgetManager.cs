@@ -16,6 +16,12 @@ namespace BudgetStuffTests
 
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
+
+        public int EffectiveDays()
+        {
+            var effectiveDays = (EndDate - StartDate).Days + 1;
+            return effectiveDays;
+        }
     }
 
     public class BudgetManager
@@ -34,9 +40,12 @@ namespace BudgetStuffTests
             var budgetMap = _repo.GetBudget(startDate, endDate);
             if (IsOnlyOneBudget(budgetMap))
             {
-                var effectiveDays = EffectiveDays(period);
-                return GetAmount(DateTime.DaysInMonth(startDate.Year, startDate.Month), budgetMap[startDate].amount,
-                    effectiveDays);
+                //TODO: 改成從 budget
+                var daysOfBudget = DateTime.DaysInMonth(startDate.Year, startDate.Month);
+
+                return GetEffectiveAmount(daysOfBudget,
+                    budgetMap[startDate].Amount,
+                    period.EffectiveDays());
             }
             else
             {
@@ -57,7 +66,7 @@ namespace BudgetStuffTests
                     {
                         timeSpan = DateTime.DaysInMonth(month.Year, month.Month);
                     }
-                    amount += GetAmount(DateTime.DaysInMonth(month.Year, month.Month), budgetMap[month].amount,
+                    amount += GetEffectiveAmount(DateTime.DaysInMonth(month.Year, month.Month), budgetMap[month].Amount,
                         timeSpan);
                     index++;
                 }
@@ -65,23 +74,14 @@ namespace BudgetStuffTests
             }
         }
 
-        private static int EffectiveDays(Period period)
-        {
-            var effectiveDays = (period.EndDate - period.StartDate).Days + 1;
-            return effectiveDays;
-        }
-
         private static bool IsOnlyOneBudget(Dictionary<DateTime, Budget> budgetMap)
         {
             return budgetMap.Keys.Count == 1;
         }
 
-        private static decimal GetAmount(int monthdays, int amount, int actualdays)
+        private static decimal GetEffectiveAmount(int daysOfBudget, int amountOfBudget, int effectiveDays)
         {
-            return amount / monthdays * actualdays;
-            //return BudgetMap[startdate].amount / DateTime.DaysInMonth(startdate.Year, startdate.Month) * (timeSpan.Days + 1);
+            return amountOfBudget / daysOfBudget * effectiveDays;
         }
-
-        // private decimal GetBudget
     }
 }
