@@ -40,17 +40,18 @@ namespace BudgetStuffTests
 
             var budgets = _repo.GetBudgets();
 
-            decimal totalAmount = 0;
-            foreach (var budget in budgets)
-            {
-                var effectiveDays = EffectiveDays(period, budget);
+            return budgets.Sum(
+                budget => EffectiveAmount(budget, period));
+        }
 
-                totalAmount += GetEffectiveAmount(budget.Days(),
-                    budget.Amount,
-                    effectiveDays);
-            }
+        private static decimal EffectiveAmount(Budget budget, Period period)
+        {
+            return (decimal) (DailyAmount(budget) * EffectiveDays(period, budget));
+        }
 
-            return totalAmount;
+        private static int DailyAmount(Budget budget)
+        {
+            return budget.Amount / budget.Days();
         }
 
         private static int EffectiveDays(Period period, Budget budget1)
@@ -83,11 +84,6 @@ namespace BudgetStuffTests
         private static bool IsOnlyOneMonth(List<Budget> budgets)
         {
             return budgets.Count == 1;
-        }
-
-        private static decimal GetEffectiveAmount(int daysOfBudget, int amountOfBudget, int effectiveDays)
-        {
-            return amountOfBudget / daysOfBudget * effectiveDays;
         }
     }
 }
