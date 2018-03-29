@@ -63,7 +63,7 @@
     <Compile Include="BudgetManager.cs" />
     <Compile Include="InvalidException.cs" />
     <Compile Include="IRepository.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="BudgetManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
