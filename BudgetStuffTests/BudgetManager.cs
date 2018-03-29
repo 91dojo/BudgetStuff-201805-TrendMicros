@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BudgetStuffTests
 {
@@ -37,7 +38,9 @@ namespace BudgetStuffTests
         {
             var period = new Period(startDate, endDate);
 
-            var budgetMap = _repo.GetBudget(startDate, endDate);
+            var budgets = _repo.GetBudgets();
+            var budgetMap = budgets.ToDictionary(x => x.FirstDay, x => x);
+
             if (IsOnlyOneBudget(budgetMap))
             {
                 //TODO: 改成從 budget
