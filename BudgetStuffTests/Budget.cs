@@ -12,10 +12,9 @@ namespace BudgetStuffTests
             get { return DateTime.ParseExact(YearMonth + "01", "yyyyMMdd", null); }
         }
 
-        public int DaysOfBudget()
+        public int Days()
         {
-            var daysOfBudget = DateTime.DaysInMonth(FirstDay.Year, FirstDay.Month);
-            return daysOfBudget;
+            return DateTime.DaysInMonth(FirstDay.Year, FirstDay.Month);
         }
     }
 }

@@ -45,7 +45,7 @@ namespace BudgetStuffTests
             {
                 //TODO: 改成從 budget
                 var budget = budgets[0];
-                var daysOfBudget = budget.DaysOfBudget();
+                var daysOfBudget = budget.Days();
 
                 return GetEffectiveAmount(daysOfBudget,
                     budgetMap[startDate].Amount,
