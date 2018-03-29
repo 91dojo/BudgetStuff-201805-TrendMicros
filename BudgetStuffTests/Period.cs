@@ -17,7 +17,7 @@ namespace BudgetStuffTests
         public DateTime EndDate { get; private set; }
 
 
-        public int EffectiveDays(Period period)
+        public int OverlappingDays(Period period)
         {
             var effectiveEndDate = EndDate > period.EndDate
                 ? period.EndDate

@@ -163,6 +163,16 @@ namespace BudgetStuffTests
             AmountShouldBe(new DateTime(2017, 03, 01), new DateTime(2017, 05, 31), 300);
         }
 
+        [TestMethod]
+        public void without_overlap_days()
+        {
+            GivenBudgets(
+                new Budget {YearMonth = "201704", Amount = 300}
+            );
+
+            AmountShouldBe(new DateTime(2017, 3, 1), new DateTime(2017, 3, 5), 0);
+        }
+
         private void AmountShouldBe(DateTime startdate, DateTime enddate, decimal expected)
         {
             Assert.AreEqual(expected, _budgetmanager.TotalAmount(startdate, enddate));

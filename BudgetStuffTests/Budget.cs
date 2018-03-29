@@ -29,7 +29,7 @@ namespace BudgetStuffTests
 
         public decimal EffectiveAmount(Period period)
         {
-            return (decimal) (DailyAmount() * period.EffectiveDays(new Period(this.FirstDay, this.LastDay)));
+            return (decimal) (DailyAmount() * period.OverlappingDays(new Period(this.FirstDay, this.LastDay)));
         }
     }
 }

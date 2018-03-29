@@ -17,25 +17,8 @@ namespace BudgetStuffTests
         {
             var period = new Period(startDate, endDate);
 
-            var budgets = _repo.GetBudgets();
-
-            return budgets.Sum(
-                budget => budget.EffectiveAmount(period));
-        }
-
-        private static bool IsLastBudget(int index, List<Budget> budgets)
-        {
-            return index == budgets.Count - 1;
-        }
-
-        private static bool IsFirstBudget(int index)
-        {
-            return index == 0;
-        }
-
-        private static bool IsOnlyOneMonth(List<Budget> budgets)
-        {
-            return budgets.Count == 1;
+            return _repo.GetBudgets()
+                .Sum(budget => budget.EffectiveAmount(period));
         }
     }
 }
