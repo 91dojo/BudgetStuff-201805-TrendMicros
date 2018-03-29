@@ -14,15 +14,22 @@ namespace BudgetStuffTests
 
         public DateTime LastDay
         {
-            get
-            {
-                return DateTime.ParseExact(YearMonth + Days(), "yyyyMMdd", null);
-            }
+            get { return DateTime.ParseExact(YearMonth + Days(), "yyyyMMdd", null); }
         }
 
         public int Days()
         {
             return DateTime.DaysInMonth(FirstDay.Year, FirstDay.Month);
+        }
+
+        public int DailyAmount()
+        {
+            return Amount / Days();
+        }
+
+        public decimal EffectiveAmount(Period period)
+        {
+            return (decimal) (DailyAmount() * period.EffectiveDays(new Period(this.FirstDay, this.LastDay)));
         }
     }
 }

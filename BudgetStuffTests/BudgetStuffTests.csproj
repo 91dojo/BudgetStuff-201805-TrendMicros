@@ -64,6 +64,7 @@
     <Compile Include="InvalidException.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="BudgetManagerTests.cs" />
+    <Compile Include="Period.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
