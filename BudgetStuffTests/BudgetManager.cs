@@ -45,37 +45,53 @@ namespace BudgetStuffTests
             {
                 //TODO: 改成從 budget
                 var budget = budgets[0];
-                var daysOfBudget = budget.Days();
 
-                return GetEffectiveAmount(daysOfBudget,
-                    budgetMap[startDate].Amount,
-                    period.EffectiveDays());
+                return GetEffectiveAmount(budget.Days(), budget.Amount, period.EffectiveDays());
             }
             else
             {
-                decimal amount = 0;
+                decimal totalAmount = 0;
                 int index = 0;
                 foreach (var month in budgetMap.Keys)
                 {
-                    int timeSpan = 0;
-                    if (index == 0)
-                    {
-                        timeSpan = DateTime.DaysInMonth(month.Year, month.Month) - startDate.Day + 1;
-                    }
-                    else if (index == budgetMap.Keys.Count - 1)
-                    {
-                        timeSpan = endDate.Day;
-                    }
-                    else
-                    {
-                        timeSpan = DateTime.DaysInMonth(month.Year, month.Month);
-                    }
-                    amount += GetEffectiveAmount(DateTime.DaysInMonth(month.Year, month.Month), budgetMap[month].Amount,
-                        timeSpan);
+                    var effectiveDays = EffectiveDays(period, index, budgets);
+
+                    totalAmount += GetEffectiveAmount(DateTime.DaysInMonth(month.Year, month.Month),
+                        budgetMap[month].Amount,
+                        effectiveDays);
                     index++;
                 }
-                return amount;
+                return totalAmount;
             }
+        }
+
+        private static int EffectiveDays(Period period, int index, List<Budget> budgets)
+        {
+            var month = budgets[index].FirstDay;
+            int effectiveDays = 0;
+            if (IsFirstBudget(index))
+            {
+                effectiveDays = DateTime.DaysInMonth(month.Year, month.Month) - period.StartDate.Day + 1;
+            }
+            else if (IsLastBudget(index, budgets))
+            {
+                effectiveDays = period.EndDate.Day;
+            }
+            else
+            {
+                effectiveDays = DateTime.DaysInMonth(month.Year, month.Month);
+            }
+            return effectiveDays;
+        }
+
+        private static bool IsLastBudget(int index, List<Budget> budgets)
+        {
+            return index == budgets.Count - 1;
+        }
+
+        private static bool IsFirstBudget(int index)
+        {
+            return index == 0;
         }
 
         private static bool IsOnlyOneMonth(List<Budget> budgets)
