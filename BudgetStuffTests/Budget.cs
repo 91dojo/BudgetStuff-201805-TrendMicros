@@ -11,5 +11,11 @@ namespace BudgetStuffTests
         {
             get { return DateTime.ParseExact(YearMonth + "01", "yyyyMMdd", null); }
         }
+
+        public int DaysOfBudget()
+        {
+            var daysOfBudget = DateTime.DaysInMonth(FirstDay.Year, FirstDay.Month);
+            return daysOfBudget;
+        }
     }
 }

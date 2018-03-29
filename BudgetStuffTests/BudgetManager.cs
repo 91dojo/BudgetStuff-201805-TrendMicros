@@ -41,10 +41,11 @@ namespace BudgetStuffTests
             var budgets = _repo.GetBudgets();
             var budgetMap = budgets.ToDictionary(x => x.FirstDay, x => x);
 
-            if (IsOnlyOneBudget(budgetMap))
+            if (IsOnlyOneMonth(budgets))
             {
                 //TODO: 改成從 budget
-                var daysOfBudget = DateTime.DaysInMonth(startDate.Year, startDate.Month);
+                var budget = budgets[0];
+                var daysOfBudget = budget.DaysOfBudget();
 
                 return GetEffectiveAmount(daysOfBudget,
                     budgetMap[startDate].Amount,
@@ -77,9 +78,9 @@ namespace BudgetStuffTests
             }
         }
 
-        private static bool IsOnlyOneBudget(Dictionary<DateTime, Budget> budgetMap)
+        private static bool IsOnlyOneMonth(List<Budget> budgets)
         {
-            return budgetMap.Keys.Count == 1;
+            return budgets.Count == 1;
         }
 
         private static decimal GetEffectiveAmount(int daysOfBudget, int amountOfBudget, int effectiveDays)
