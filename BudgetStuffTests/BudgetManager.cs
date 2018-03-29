@@ -3,6 +3,18 @@ using System.Collections.Generic;
 
 namespace BudgetStuffTests
 {
+    public class Period
+    {
+        public Period(DateTime startDate, DateTime endDate)
+        {
+            StartDate = startDate;
+            EndDate = endDate;
+        }
+
+        public DateTime StartDate { get; private set; }
+        public DateTime EndDate { get; private set; }
+    }
+
     public class BudgetManager
     {
         private readonly IRepository<Budget> _repo;
@@ -20,7 +32,7 @@ namespace BudgetStuffTests
             var budgetMap = _repo.GetBudget(startDate, endDate);
             if (IsOnlyOneBudget(budgetMap))
             {
-                var effectiveDays = EffectiveDays(startDate, endDate);
+                var effectiveDays = EffectiveDays(new Period(startDate, endDate));
                 return GetAmount(DateTime.DaysInMonth(startDate.Year, startDate.Month), budgetMap[startDate].amount,
                     effectiveDays);
             }
@@ -51,9 +63,9 @@ namespace BudgetStuffTests
             }
         }
 
-        private static int EffectiveDays(DateTime startDate, DateTime endDate)
+        private static int EffectiveDays(Period period)
         {
-            var effectiveDays = (endDate - startDate).Days + 1;
+            var effectiveDays = (period.EndDate - period.StartDate).Days + 1;
             return effectiveDays;
         }
 
