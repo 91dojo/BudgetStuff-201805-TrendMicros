@@ -7,6 +7,9 @@ namespace BudgetStuffTests
     {
         public Period(DateTime startDate, DateTime endDate)
         {
+            if (startDate > endDate)
+                throw new InvalidException();
+
             StartDate = startDate;
             EndDate = endDate;
         }
@@ -26,13 +29,12 @@ namespace BudgetStuffTests
 
         public decimal TotalAmount(DateTime startDate, DateTime endDate)
         {
-            if (startDate > endDate)
-                throw new InvalidException();
+            var period = new Period(startDate, endDate);
 
             var budgetMap = _repo.GetBudget(startDate, endDate);
             if (IsOnlyOneBudget(budgetMap))
             {
-                var effectiveDays = EffectiveDays(new Period(startDate, endDate));
+                var effectiveDays = EffectiveDays(period);
                 return GetAmount(DateTime.DaysInMonth(startDate.Year, startDate.Month), budgetMap[startDate].amount,
                     effectiveDays);
             }
