@@ -39,49 +39,35 @@ namespace BudgetStuffTests
             var period = new Period(startDate, endDate);
 
             var budgets = _repo.GetBudgets();
-            var budgetMap = budgets.ToDictionary(x => x.FirstDay, x => x);
 
-            if (IsOnlyOneMonth(budgets))
+            decimal totalAmount = 0;
+            foreach (var budget in budgets)
             {
-                //TODO: 改成從 budget
-                var budget = budgets[0];
+                var effectiveDays = EffectiveDays(period, budget);
 
-                return GetEffectiveAmount(budget.Days(), budget.Amount, period.EffectiveDays());
+                totalAmount += GetEffectiveAmount(budget.Days(),
+                    budget.Amount,
+                    effectiveDays);
             }
-            else
-            {
-                decimal totalAmount = 0;
-                int index = 0;
-                foreach (var month in budgetMap.Keys)
-                {
-                    var effectiveDays = EffectiveDays(period, index, budgets);
 
-                    totalAmount += GetEffectiveAmount(DateTime.DaysInMonth(month.Year, month.Month),
-                        budgetMap[month].Amount,
-                        effectiveDays);
-                    index++;
-                }
-                return totalAmount;
-            }
+            return totalAmount;
         }
 
-        private static int EffectiveDays(Period period, int index, List<Budget> budgets)
+        private static int EffectiveDays(Period period, Budget budget1)
         {
-            var month = budgets[index].FirstDay;
-            int effectiveDays = 0;
-            if (IsFirstBudget(index))
+            var effectiveEndDate = period.EndDate;
+            if (period.EndDate > budget1.LastDay)
             {
-                effectiveDays = DateTime.DaysInMonth(month.Year, month.Month) - period.StartDate.Day + 1;
+                effectiveEndDate = budget1.LastDay;
             }
-            else if (IsLastBudget(index, budgets))
+
+            var effectiveStartDate = period.StartDate;
+            if (period.StartDate < budget1.FirstDay)
             {
-                effectiveDays = period.EndDate.Day;
+                effectiveStartDate = budget1.FirstDay;
             }
-            else
-            {
-                effectiveDays = DateTime.DaysInMonth(month.Year, month.Month);
-            }
-            return effectiveDays;
+
+            return (int) (effectiveEndDate.AddDays(1) - effectiveStartDate).TotalDays;
         }
 
         private static bool IsLastBudget(int index, List<Budget> budgets)
